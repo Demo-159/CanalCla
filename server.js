@@ -11,8 +11,8 @@ app.get('/canal', (req, res) => {
   try {
     const command = ffmpeg(ORIGINAL_M3U8)
       .inputOptions([
-        '-headers',
-        'User-Agent: Mozilla/5.0\r\nReferer: https://clarovideo.com\r\nOrigin: https://clarovideo.com\r\n'
+        '-user_agent', 'Mozilla/5.0',
+        '-referer', 'https://clarovideo.com'
       ])
       .addOptions(['-filter:a volume=0.4', '-c:v copy', '-f hls'])
       .on('start', cmd => {
@@ -23,11 +23,9 @@ app.get('/canal', (req, res) => {
       .on('error', err => {
         console.error('Error FFmpeg:', err.message);
         if (!headersSent) {
-          res.status(500).send('Error en el canal (FFmpeg no arrancó)');
+          res.status(500).send('Error en el canal');
         } else {
-          // Ya se están transmitiendo datos, no podemos mandar headers de error.
-          // Podríamos terminar la respuesta abruptamente:
-          res.end(); // o simplemente dejar que el cliente maneje el corte
+          res.end();
         }
       });
 
