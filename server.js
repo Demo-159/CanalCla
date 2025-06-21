@@ -3,20 +3,22 @@ const ffmpeg = require('fluent-ffmpeg');
 
 const app = express();
 
-// URL original del m3u8 (cámbiala por la tuya)
 const ORIGINAL_M3U8 = 'http://clbpktstvhls-1.clarovideo.com/bpk-tv/MEGAHD/hls_fk/index.m3u8';
-
-app.get('/', (req, res) => {
-  res.send('Servidor de canal con volumen reducido');
-});
 
 app.get('/canal', (req, res) => {
   res.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
 
   ffmpeg(ORIGINAL_M3U8)
+    .inputOptions([
+      '-headers',
+      'User-Agent: Mozilla/5.0\r\nReferer: https://clarovideo.com\r\nOrigin: https://clarovideo.com\r\n'
+    ])
     .addOptions(['-filter:a volume=0.4', '-c:v copy', '-f hls'])
     .on('start', cmd => console.log('FFmpeg ejecutando:', cmd))
-    .on('error', err => console.error('Error FFmpeg:', err))
+    .on('error', err => {
+      console.error('Error FFmpeg:', err.message);
+      res.status(500).send('Error en el canal');
+    })
     .pipe(res, { end: true });
 });
 
