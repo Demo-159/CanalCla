@@ -4,7 +4,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const app = express();
 
 // URL original del m3u8 (cámbiala por la tuya)
-const ORIGINAL_M3U8 = 'https://tudominio.com/canal-original.m3u8';
+const ORIGINAL_M3U8 = 'http://clbpktstvhls-1.clarovideo.com/bpk-tv/MEGAHD/hls_fk/index.m3u8';
 
 app.get('/', (req, res) => {
   res.send('Servidor de canal con volumen reducido');
