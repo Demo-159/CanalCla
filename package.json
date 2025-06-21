@@ -1,0 +1,13 @@
+{
+  "name": "canal-bajo-volumen",
+  "version": "1.0.0",
+  "description": "Retransmisión m3u8 con volumen bajo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "fluent-ffmpeg": "^2.1.2"
+  }
+}
