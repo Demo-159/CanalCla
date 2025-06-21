@@ -11,8 +11,8 @@ app.get('/canal', (req, res) => {
   try {
     const command = ffmpeg(ORIGINAL_M3U8)
       .inputOptions([
-        '-user_agent', 'Mozilla/5.0',
-        '-referer', 'https://clarovideo.com'
+        '-user_agent', 'SmartIPTV/1.6.6 (Linux; U; Android 9; en-us)',
+        '-referer', 'http://clarovideo.com'
       ])
       .addOptions(['-filter:a volume=0.4', '-c:v copy', '-f hls'])
       .on('start', cmd => {
